@@ -31,13 +31,13 @@ const debugProperty = Symbol('debug');
 const eventQueue = Symbol('eventQueue');
 const eventEmitter = Symbol('eventEmitter');
 
-const Appliance = module.exports = toExtendable(class Appliance extends EventEmitter {
+const Appliance = module.exports = toExtendable(class Appliance {
 	constructor() {
-		super();
 
 		this.metadata = new Metadata();
 
 		this[eventQueue] = [];
+		this[eventEmitter] = new EventEmitter(this);
 
 		traversePrototype(this, 'availableAPI', items => this.metadata.exposeAPI(...items));
 		traversePrototype(this, 'types', types => this.metadata.type(...types));
@@ -76,6 +76,22 @@ const Appliance = module.exports = toExtendable(class Appliance extends EventEmi
 				this[eventQueue] = [];
 			});
 		}
+	}
+
+	on(event, listener) {
+		this[eventEmitter].on(event, listener);
+	}
+
+	off(event, listener) {
+		this[eventEmitter].off(event, listener);
+	}
+
+	onAny(listener) {
+		this[eventEmitter].onAny(listener);
+	}
+
+	offAny(listener) {
+		this[eventEmitter].offAny(listener);
 	}
 
 	debug() {
