@@ -1,0 +1,31 @@
+{
+  "name": "appliances",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Abstract code for buildng devices",
+  "repository": "aholstenson/appliances",
+  "keywords": [
+    "device",
+    "iot"
+  ],
+  "scripts": {
+    "test": "node_modules/.bin/eslint ."
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "amounts": "^0.4.0",
+    "color-convert": "^1.9.0",
+    "color-string": "^1.5.2",
+    "color-temperature": "^0.2.7",
+    "debug": "^3.1.0",
+    "deep-equal": "^1.0.1",
+    "foibles": "^0.2.0",
+    "is-mergeable-object": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-plugin-node": "^5.2.0"
+  }
+}
