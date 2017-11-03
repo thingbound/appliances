@@ -5,15 +5,46 @@ const State = require('./state');
 const { boolean } = require('../values');
 
 /**
- * Power capability, for devices that support switching and monitoring the power
- * status of a device.
+ * Power capability, for appliances that support switching and monitoring the
+ * power status of themselves.
  */
 module.exports = Appliance.capability(Appliance => class extends Appliance.with(State) {
 	/**
-	* Get the API functions that this device makes available.
+	* Define the API of appliances that can manage their power.
 	*/
-	static get availableAPI() {
-		return [ 'power', 'turnOn', 'turnOff', 'setPower' ];
+	static availableAPI(builder) {
+		builder.state('power')
+			.type('boolean')
+			.description('The power state of this appliance')
+			.done();
+
+		builder.event('power')
+			.type('boolean')
+			.description('The power state of the appliance has changed')
+			.done();
+
+		builder.action('power')
+			.description('Get or set the power state of this appliance')
+			.argument('boolean', true, 'Optional power state to change to')
+			.returns('boolean', 'The power state of the appliance')
+			.getterForState('power')
+			.done();
+
+		builder.action('setPower')
+			.description('Set the power state of this appliance')
+			.argument('boolean', false, 'The power state to change to')
+			.returns('boolean', 'The power state of the appliance')
+			.done();
+
+		builder.action('turnOn')
+			.description('Turn this appliance on')
+			.returns('boolean', 'The power state of the appliance')
+			.done();
+
+		builder.action('turnOff')
+			.description('Turn this appliance off')
+			.returns('boolean', 'The power state of the appliance')
+			.done();
 	}
 
 	/**
@@ -30,7 +61,7 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 	}
 
 	/**
-	* Get or switch the power of the device.
+	* Get or switch the power of the appliance.
 	*
 	* @param {boolean} power
 	*   optional power level to switch to

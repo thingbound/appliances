@@ -13,8 +13,16 @@ module.exports = Appliance.capability(Appliance => class extends Appliance {
 	/**
 	 * Get the API that appliances with state make available.
 	 */
-	static get availableAPI() {
-		return [ 'state' ];
+	static availableAPI(builder) {
+		builder.event('state')
+			.type('object')
+			.description('The state of the appliance has changed')
+			.done();
+
+		builder.action('state')
+			.description('Get the current state')
+			.returns('object')
+			.done();
 	}
 
 	/**

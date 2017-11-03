@@ -2,6 +2,7 @@
 
 const { Class, Mixin, toExtendable, mix } = require('foibles');
 const { EventEmitter } = require('./events');
+const DefinitionBuilder = require('./utils/define-api');
 const debug = require('debug');
 
 const Metadata = require('./metadata');
@@ -33,16 +34,19 @@ const eventEmitter = Symbol('eventEmitter');
 
 const Appliance = module.exports = toExtendable(class Appliance {
 	constructor() {
-
 		this.metadata = new Metadata();
 
 		this[eventQueue] = [];
 		this[eventEmitter] = new EventEmitter(this);
 
-		traversePrototype(this, 'availableAPI', items => this.metadata.exposeAPI(...items));
 		traversePrototype(this, 'types', types => this.metadata.type(...types));
 		traversePrototype(this, 'type', type => this.metadata.type(type));
 		traversePrototype(this, 'capabilities', caps => this.metadata.capability(...caps));
+
+		// Get our available API
+		const builder = new DefinitionBuilder();
+		traversePrototype(this, 'availableAPI', func => func(builder));
+		Object.assign(this.metadata, builder.done());
 	}
 
 	/**
