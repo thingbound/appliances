@@ -11,12 +11,12 @@ const anyListeners = Symbol('anyListeners');
 const context = Symbol('context');
 const triggerListenerChange = Symbol('triggerListenerChange');
 
-class EventEmitter {
-	constructor(defaultCtx) {
+module.exports.EventEmitter = class EventEmitter {
+	constructor(options) {
 		this[registeredListeners] = {};
 		this[anyListeners] = [];
 
-		this[context] = defaultCtx || this;
+		this[context] = options && options.context || this;
 	}
 
 	[triggerListenerChange]() {
@@ -24,6 +24,10 @@ class EventEmitter {
 
 		const hasListeners = Object.keys(this._listeners).length;
 		this._listenerChangeListener(hasListeners);
+	}
+
+	get hasListeners() {
+		return this[registeredListeners].length > 0 || this[anyListeners] > 0;
 	}
 
 	/**
@@ -176,5 +180,3 @@ class EventEmitter {
 		}
 	}
 }
-
-module.exports.EventEmitter = EventEmitter;

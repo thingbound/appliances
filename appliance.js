@@ -37,7 +37,9 @@ const Appliance = module.exports = toExtendable(class Appliance {
 		this.metadata = new Metadata();
 
 		this[eventQueue] = [];
-		this[eventEmitter] = new EventEmitter(this);
+		this[eventEmitter] = new EventEmitter({
+			context: this
+		});
 
 		traversePrototype(this, 'types', types => this.metadata.type(...types));
 		traversePrototype(this, 'type', type => this.metadata.type(type));
@@ -83,19 +85,19 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	}
 
 	on(event, listener) {
-		this[eventEmitter].on(event, listener);
+		return this[eventEmitter].on(event, listener);
 	}
 
 	off(event, listener) {
-		this[eventEmitter].off(event, listener);
+		return this[eventEmitter].off(event, listener);
 	}
 
 	onAny(listener) {
-		this[eventEmitter].onAny(listener);
+		return this[eventEmitter].onAny(listener);
 	}
 
 	offAny(listener) {
-		this[eventEmitter].offAny(listener);
+		return this[eventEmitter].offAny(listener);
 	}
 
 	debug() {
