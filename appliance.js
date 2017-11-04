@@ -41,9 +41,9 @@ const Appliance = module.exports = toExtendable(class Appliance {
 			context: this
 		});
 
-		traversePrototype(this, 'types', types => this.metadata.type(...types));
-		traversePrototype(this, 'type', type => this.metadata.type(type));
-		traversePrototype(this, 'capabilities', caps => this.metadata.capability(...caps));
+		traversePrototype(this, 'types', types => this.metadata.addTypes(...types));
+		traversePrototype(this, 'type', type => this.metadata.addTypes(type));
+		traversePrototype(this, 'capabilities', caps => this.metadata.addCapabilities(...caps));
 
 		// Get our available API
 		const builder = new DefinitionBuilder();
@@ -102,7 +102,7 @@ const Appliance = module.exports = toExtendable(class Appliance {
 
 	debug() {
 		if(! this[debugProperty]) {
-			this[debugProperty] = debug('device:' + this.metadata.id);
+			this[debugProperty] = debug('appliance:' + this.id);
 		}
 
 		this[debugProperty].apply(this[debugProperty], arguments);
