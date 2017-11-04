@@ -36,6 +36,11 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 			.returns('boolean', 'The power state of the appliance')
 			.done();
 
+		builder.action('togglePower')
+			.description('Toggle thw power of the device, turning it on if off and vice versa')
+			.returns('boolean', 'The power state of the appliance')
+			.done();
+
 		builder.action('turnOn')
 			.description('Turn this appliance on')
 			.returns('boolean', 'The power state of the appliance')
@@ -54,8 +59,8 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 		return [ 'power' ];
 	}
 
-	constructor() {
-		super();
+	constructor(...args) {
+		super(...args);
 
 		this.updateState('power', false);
 	}
@@ -89,6 +94,13 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 	*/
 	turnOff() {
 		return this.power(false);
+	}
+
+	/**
+	 * Toggler the power of the device.
+	 */
+	togglePower() {
+		return this.setPower(! this.getState('power'));
 	}
 
 	/**
