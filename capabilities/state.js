@@ -32,14 +32,14 @@ module.exports = Appliance.capability(Appliance => class extends Appliance {
 		return [ 'state' ];
 	}
 
-	constructor() {
-		super();
+	constructor(...args) {
+		super(...args);
 
 		this.state = {};
 	}
 
 	/**
-	 * Update the state of this device by setting the value for a certain property.
+	 * Update the state of this appliance by setting the value for a certain property.
 	 *
 	 * @param {string} key
 	 * @param {*} value
@@ -58,7 +58,7 @@ module.exports = Appliance.capability(Appliance => class extends Appliance {
 	}
 
 	/**
-	 * Update the state of this device by removing a certain property.
+	 * Update the state of this appliance by removing a certain property.
 	 *
 	 * @param {string} key
 	 */
