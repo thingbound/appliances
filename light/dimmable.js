@@ -3,7 +3,7 @@ const Light = require('./light');
 const State = require('../capabilities/state');
 const { duration, percentage } = require('../values');
 
-module.exports = Appliance.capability(BaseDevice => class DimmableLight extends BaseDevice.with(State) {
+module.exports = Appliance.capability(BaseAppliance => class DimmableLight extends BaseAppliance.with(State) {
 	/**
 	 * Expose the brightness API.
 	 */
@@ -45,7 +45,7 @@ module.exports = Appliance.capability(BaseDevice => class DimmableLight extends 
 	}
 
 	/**
-	 * Mark the device as dimmable.
+	 * Mark the light as dimmable.
 	 */
 	static get capabilities() {
 		return [ 'dimmable' ];
@@ -102,7 +102,7 @@ module.exports = Appliance.capability(BaseDevice => class DimmableLight extends 
 	}
 
 	/**
-	 * Change the brightness of this light. Should change the brightness of the device and
+	 * Change the brightness of this light. Should change the brightness of the light and
 	 * call `updateBrightness` with the brightness that has actually been set.
 	 *
 	 * @param {number} brightness

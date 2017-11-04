@@ -4,7 +4,7 @@ const Light = require('./light');
 const State = require('../capabilities/state');
 const { duration, color } = require('../values');
 
-module.exports = Appliance.capability(BaseDevice => class ColoredLight extends BaseDevice.with(State) {
+module.exports = Appliance.capability(BaseAppliance => class ColoredLight extends BaseAppliance.with(State) {
 	/**
 	 * Expose the color methods.
 	 */
@@ -34,7 +34,7 @@ module.exports = Appliance.capability(BaseDevice => class ColoredLight extends B
 	}
 
 	/**
-	 * Mark the device as dimmable.
+	 * Mark the light as dimmable.
 	 */
 	static get capabilities() {
 		return [ 'color' ];
