@@ -6,7 +6,7 @@ const State = require('./state');
 /**
  * Mode capability, for appliances that support different modes.
  */
-module.exports = Appliance.capability(Appliance => class extends Appliance.with(State) {
+module.exports = Appliance.capability(Appliance => class ApplianceWithState extends Appliance.with(State) {
 	/**
 	* Define the API of appliances that can manage their power.
 	*/
@@ -54,8 +54,8 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 	/**
 	* Get that this provides the mode capability.
 	*/
-	static get capabilities() {
-		return [ 'mode' ];
+	static get capability() {
+		return 'mode';
 	}
 
 	constructor(...args) {

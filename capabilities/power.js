@@ -8,7 +8,7 @@ const { boolean } = require('../values');
  * Power capability, for appliances that support switching and monitoring the
  * power status of themselves.
  */
-module.exports = Appliance.capability(Appliance => class extends Appliance.with(State) {
+module.exports = Appliance.capability(Appliance => class ApplianceWithPower extends Appliance.with(State) {
 	/**
 	* Define the API of appliances that can manage their power.
 	*/
@@ -55,8 +55,8 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 	/**
 	* Get that this provides the power capability.
 	*/
-	static get capabilities() {
-		return [ 'power' ];
+	static get capability() {
+		return 'power';
 	}
 
 	constructor(...args) {

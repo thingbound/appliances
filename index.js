@@ -1,6 +1,8 @@
 module.exports = {
 	Appliance: require('./appliance'),
 
+	State: require('./capabilities/state'),
+
 	Power: require('./capabilities/power'),
-	State: require('./capabilities/state')
+	Mode: require('./capabilities/mode')
 };

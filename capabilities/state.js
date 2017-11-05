@@ -9,7 +9,7 @@ const deepEqual = require('deep-equal');
  * Use `updateState(key, value)` to change the state of the given key and emit
  * an event to clients that the state has changed.
  */
-module.exports = Appliance.capability(Appliance => class extends Appliance {
+module.exports = Appliance.capability(Appliance => class ApplianceWithState extends Appliance {
 	/**
 	 * Get the API that appliances with state make available.
 	 */
@@ -28,8 +28,8 @@ module.exports = Appliance.capability(Appliance => class extends Appliance {
 	/**
 	 * Get that this provides the state capability.
 	 */
-	static get capabilities() {
-		return [ 'state' ];
+	static get capability() {
+		return 'state';
 	}
 
 	constructor(...args) {
