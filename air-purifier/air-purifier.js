@@ -8,4 +8,3 @@ module.exports = Appliance.type(BaseAppliance => class AirPurifier extends BaseA
 		return 'air-purifier';
 	}
 });
-
