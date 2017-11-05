@@ -1,3 +1,5 @@
+'use strict';
+
 const isMergeableObject = require('is-mergeable-object')
 
 function merge(a, b) {

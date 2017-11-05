@@ -1,3 +1,5 @@
+'use strict';
+
 const Appliance = require('../appliance');
 const Sensor = require('./sensor');
 const { temperature } = require('../values');

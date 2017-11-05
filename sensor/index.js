@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.Sensor = require('./sensor');
 module.exports.Temperature = require('./temperature');
 module.exports.RelativeHumidity = require('./relativeHumidity');

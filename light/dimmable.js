@@ -1,3 +1,5 @@
+'use strict';
+
 const Appliance = require('../appliance');
 const Light = require('./light');
 const State = require('../capabilities/state');

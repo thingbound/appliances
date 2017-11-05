@@ -1,3 +1,5 @@
+'use strict';
+
 const Appliance = require('../appliance');
 const { duration } = require('../values');
 

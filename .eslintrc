@@ -4,6 +4,7 @@
   "env": {},
   "globals": {},
   "rules": {
+    "strict": [ "error", "global" ],
     "node/no-unsupported-features": [
       "error",
       {

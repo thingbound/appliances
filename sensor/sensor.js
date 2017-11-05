@@ -1,3 +1,5 @@
+'use strict';
+
 const Appliance = require('../appliance');
 
 module.exports = Appliance.type(BaseAppliance => class Sensor extends BaseAppliance {

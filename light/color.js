@@ -1,3 +1,4 @@
+'use strict';
 
 const Appliance = require('../appliance');
 const Light = require('./light');
