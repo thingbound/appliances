@@ -27,7 +27,7 @@ npm install appliances
 Creating a light that can powered on or off via some random API:
 
 ```javascript
-const { Light, Power } = require('appliances);
+const { Light, Power } = require('appliances');
 class LightExample extends Light.with(Power) {
 	constructor(externalLightApi) {
 		super();
