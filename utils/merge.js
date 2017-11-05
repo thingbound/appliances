@@ -15,6 +15,8 @@ function merge(a, b) {
 }
 
 function mergeObject(a, b) {
+	if(! b) return a;
+
 	for(const key of Object.keys(b)) {
 		const value = b[key];
 		if(typeof a[key] === 'undefined') {
@@ -27,6 +29,8 @@ function mergeObject(a, b) {
 }
 
 function mergeArray(a, b) {
+	if(! b) return a;
+
 	for(const value of b) {
 		if(a.indexOf(value) < 0) {
 			a.push(value);
@@ -36,6 +40,8 @@ function mergeArray(a, b) {
 }
 
 function mergeSet(a, b) {
+	if(! b) return a;
+
 	for(const value of b) {
 		a.add(value);
 	}
