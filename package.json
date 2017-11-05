@@ -2,10 +2,11 @@
   "name": "appliances",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "Abstract code for buildng devices",
-  "repository": "aholstenson/appliances",
+  "description": "Base classes for standarized API for smart appliances and devices",
+  "repository": "tinkerhub/appliances",
   "keywords": [
     "device",
+    "appliance",
     "iot"
   ],
   "scripts": {
