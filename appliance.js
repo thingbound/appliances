@@ -9,22 +9,56 @@ const Metadata = require('./metadata');
 const merge = require('./utils/merge');
 
 /**
- * Go through the prototype chain of a class looking for a static
- * function/property with the given name.
+ * Go through the prototype chain of a class looking for information that
+ * is used to create metadata about an instance.
  */
-function traversePrototype(root, name, func) {
-	let prototype = root.constructor;
+function collectMetadata(instance) {
+	const metadata = new Metadata();
+	const builder = new DefinitionBuilder();
+
+	let prototype = instance.constructor;
 	while(prototype != Appliance) {
-		if(prototype.hasOwnProperty(name)) {
-			// If this property belongs to this prototype get the value
-			const value = prototype[name];
-			if(typeof value !== 'undefined') {
-				func(value);
+		// static get types() { return [ 'typeA', 'typeB ] }
+		const types = prototype.types;
+		if(typeof types !== 'undefined') {
+			if(! Array.isArray(types)) {
+				metadata.addTypes(types);
+			} else {
+				metadata.addTypes(...types);
 			}
+		}
+
+		// static get type() { return 'type' }
+		const type = prototype.type;
+		if(typeof type === 'string') {
+			metadata.addTypes(type);
+		}
+
+		// static get capabilities() { return [ 'capA', 'capB ] }
+		const capabilities = prototype.capabilities;
+		if(typeof capabilities !== 'undefined') {
+			if(! Array.isArray(capabilities)) {
+				metadata.addCapabilities(capabilities);
+			} else {
+				metadata.addCapabilities(...capabilities);
+			}
+		}
+
+		// static get capability() { return 'cap' }
+		const capability = prototype.capability;
+		if(typeof capability === 'string') {
+			metadata.addCapabilities(capability);
+		}
+
+		if(typeof prototype.availableAPI === 'function') {
+			prototype.availableAPI(builder);
 		}
 
 		prototype = Object.getPrototypeOf(prototype);
 	}
+
+	Object.assign(metadata, builder.done());
+	return metadata;
 }
 
 const debugProperty = Symbol('debug');
@@ -34,21 +68,12 @@ const eventEmitter = Symbol('eventEmitter');
 
 const Appliance = module.exports = toExtendable(class Appliance {
 	constructor() {
-		this.metadata = new Metadata();
+		this.metadata = collectMetadata(this);
 
 		this[eventQueue] = [];
 		this[eventEmitter] = new EventEmitter({
 			context: this
 		});
-
-		traversePrototype(this, 'types', types => this.metadata.addTypes(...types));
-		traversePrototype(this, 'type', type => this.metadata.addTypes(type));
-		traversePrototype(this, 'capabilities', caps => this.metadata.addCapabilities(...caps));
-
-		// Get our available API
-		const builder = new DefinitionBuilder();
-		traversePrototype(this, 'availableAPI', func => func(builder));
-		Object.assign(this.metadata, builder.done());
 	}
 
 	/**
@@ -109,7 +134,7 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	}
 
 	/**
-	 * Create a new type that can be mixed in with a Device.
+	 * Create a new type that can be mixed in with Appliance.
 	 *
 	 * @param {function} func
 	 */
@@ -118,7 +143,7 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	}
 
 	/**
-	 * Create a new capability that can be mixed in with a Device.
+	 * Create a new capability that can be mixed in with a Appliance.
 	 *
 	 * @param {function} func
 	 */
@@ -126,6 +151,12 @@ const Appliance = module.exports = toExtendable(class Appliance {
 		return Mixin(func);
 	}
 
+	/**
+	 * Mixin the given mixins to the specified object.
+	 *
+	 * @param {*} obj
+	 * @param {array} mixins
+	 */
 	static mixin(obj, ...mixins) {
 		const direct = Object.getPrototypeOf(obj);
 		const parent = Object.getPrototypeOf(direct);
@@ -143,6 +174,12 @@ const Appliance = module.exports = toExtendable(class Appliance {
 		merge(obj, data);
 	}
 
+	/**
+	 * Extend this appliance with the given mixin. Used to dynamically apply
+	 * capabilities during instance construction.
+	 *
+	 * @param {array} mixins
+	 */
 	extendWith(...mixins) {
 		Appliance.mixin(this, ...mixins);
 	}
