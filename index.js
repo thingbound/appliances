@@ -6,5 +6,7 @@ module.exports = {
 	State: require('./capabilities/state'),
 
 	Power: require('./capabilities/power'),
-	Mode: require('./capabilities/mode')
+	Mode: require('./capabilities/mode'),
+
+	Storage: require('./storage')
 };
