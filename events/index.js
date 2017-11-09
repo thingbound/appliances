@@ -11,6 +11,8 @@ const anyListeners = Symbol('anyListeners');
 const context = Symbol('context');
 const triggerListenerChange = Symbol('triggerListenerChange');
 
+const listenersChanged = module.exports.listenersChanged =  Symbol('listenersChanged');
+
 module.exports.EventEmitter = class EventEmitter {
 	constructor(options) {
 		this[registeredListeners] = {};
@@ -20,14 +22,15 @@ module.exports.EventEmitter = class EventEmitter {
 	}
 
 	[triggerListenerChange]() {
-		if(! this._listenerChangeListener) return;
+		if(! this[listenersChanged]) return;
 
-		const hasListeners = Object.keys(this._listeners).length;
-		this._listenerChangeListener(hasListeners);
+		const hasListeners = Object.keys(this[registeredListeners]).length > 0
+			|| this[anyListeners].length > 0;
+		this[listenersChanged](hasListeners);
 	}
 
 	get hasListeners() {
-		return this[registeredListeners].length > 0 || this[anyListeners] > 0;
+		return Object.keys(this[registeredListeners]).length > 0 || this[anyListeners] > 0;
 	}
 
 	/**
@@ -96,7 +99,7 @@ module.exports.EventEmitter = class EventEmitter {
 		var idx = this[anyListeners].indexOf(listener);
 		if(idx < 0) return;
 
-		this[registeredListeners].splice(idx, 1);
+		this[anyListeners].splice(idx, 1);
 
 		this[triggerListenerChange]();
 	}
