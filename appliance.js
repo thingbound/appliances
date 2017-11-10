@@ -82,15 +82,17 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	 * @param {string} event
 	 * @param {*} data
 	 */
-	emitEvent(event, data) {
+	emitEvent(event, data, options) {
 		const queue = this[eventQueue];
 		const shouldQueueEmit = queue.length === 0;
 
-		// Check if there is already an even scheduled
-		const idx = queue.findIndex(e => e[0] === event);
-		if(idx >= 0) {
-			// Remove the event - only a single event can is emitted per tick
-			queue.splice(idx, 1);
+		if(! options || ! options.multiple) {
+			// Check if there is already an even scheduled
+			const idx = queue.findIndex(e => e[0] === event);
+			if(idx >= 0) {
+				// Remove the event - only a single event can is emitted per tick
+				queue.splice(idx, 1);
+			}
 		}
 
 		// Add the event to the queue
