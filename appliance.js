@@ -143,6 +143,12 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	}
 
 	/**
+	 * Destroy this appliance, freeing any resources that it is using.
+	 */
+	destroy() {
+	}
+
+	/**
 	 * Create a new type that can be mixed in with Appliance.
 	 *
 	 * @param {function} func
