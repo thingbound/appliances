@@ -41,4 +41,27 @@ module.exports = class Metadata {
 	hasCapability(cap) {
 		return this.capabilities.has(cap);
 	}
+
+	/**
+	 * Check if this metadata matches the given tags.
+	 *
+	 * @param {string} tags
+	 */
+	is(...tags) {
+		for(const tag of tags) {
+			if(tag.indexOf('type:') === 0) {
+				if(! this.hasType(tag.substring(5))) {
+					return false;
+				}
+			} else if(tag.indexOf('cap:') === 0) {
+				if(! this.hasCapability(tag.substring(4))) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}
 };
