@@ -20,13 +20,17 @@ module.exports = class Metadata {
 	}
 
 	set name(n) {
-		this[name] = n;
+		if(this[name] !== n) {
+			this[name] = n;
+			this[appliance].emitEvent('appliance:metadata', this);
+		}
 	}
 
 	addTypes(...types) {
 		for(let type of types) {
 			this.types.add(type);
 		}
+		this[appliance].emitEvent('appliance:metadata', this);
 		return this;
 	}
 
@@ -34,6 +38,7 @@ module.exports = class Metadata {
 		for(let cap of caps) {
 			this.capabilities.add(cap);
 		}
+		this[appliance].emitEvent('appliance:metadata', this);
 		return this;
 	}
 

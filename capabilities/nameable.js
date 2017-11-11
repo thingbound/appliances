@@ -30,7 +30,8 @@ module.exports = Appliance.capability(Appliance => class ApplianceWithName exten
 
 	setName(name) {
 		try {
-			return Promise.resolve(this.changeName(name));
+			return Promise.resolve(this.changeName(name))
+				.then(() => this.metadata.name);
 		} catch(ex) {
 			return Promise.reject(ex);
 		}

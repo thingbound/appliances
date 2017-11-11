@@ -97,6 +97,10 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	 */
 	emitEvent(event, data, options) {
 		const queue = this[eventQueue];
+
+		// Metadata may emit events before the queue is availabe, skip them
+		if(! queue) return;
+
 		const shouldQueueEmit = queue.length === 0;
 
 		if(! options || ! options.multiple) {
