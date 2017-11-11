@@ -3,7 +3,7 @@
 const Appliance = require('../appliance');
 const Light = require('./light');
 const State = require('../capabilities/state');
-const { duration, percentage } = require('../values');
+const { duration, percentage, 'percentage:change': change } = require('../values');
 
 module.exports = Appliance.capability(BaseAppliance => class DimmableLight extends BaseAppliance.with(State) {
 	/**
@@ -59,7 +59,9 @@ module.exports = Appliance.capability(BaseAppliance => class DimmableLight exten
 	brightness(brightness, duration=Light.DURATION) {
 		let currentBrightness = this.getState('brightness', 0);
 
-		if(brightness) {
+		if(typeof brightness !== 'undefined') {
+			brightness = change(brightness);
+
 			let toSet;
 			if(brightness.isIncrease) {
 				toSet = currentBrightness + brightness.value;
