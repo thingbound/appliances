@@ -1,13 +1,26 @@
 'use strict';
 
+const appliance = Symbol('appliance');
+const name = Symbol('name');
+
 /**
  * Metadata for a appliance that provides a builder-like API for
  * easily updating the metadata.
  */
 module.exports = class Metadata {
-	constructor() {
+	constructor(instance) {
+		this[appliance] = instance;
+
 		this.types = new Set();
 		this.capabilities = new Set();
+	}
+
+	get name() {
+		return this[name];
+	}
+
+	set name(n) {
+		this[name] = n;
 	}
 
 	addTypes(...types) {

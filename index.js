@@ -8,6 +8,8 @@ module.exports = {
 	Power: require('./capabilities/power'),
 	Mode: require('./capabilities/mode'),
 
+	Nameable: require('./capabilities/nameable'),
+
 	Storage: require('./storage'),
 	Children: require('./children')
 };

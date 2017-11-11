@@ -13,7 +13,7 @@ const merge = require('./utils/merge');
  * is used to create metadata about an instance.
  */
 function collectMetadata(instance) {
-	const metadata = new Metadata();
+	const metadata = new Metadata(instance);
 	const builder = new DefinitionBuilder();
 
 	let prototype = instance.constructor;
@@ -50,8 +50,21 @@ function collectMetadata(instance) {
 			metadata.addCapabilities(capability);
 		}
 
-		if(typeof prototype.availableAPI === 'function') {
+		const api = prototype.availableAPI;
+		if(typeof api === 'function') {
 			prototype.availableAPI(builder);
+		} else if(Array.isArray(api)) {
+			// If an array treat each entry as a name
+			for(const action of api) {
+				builder.action(action).done();
+			}
+		} else if(typeof api === 'undefined') {
+			// No API defined, automatically define actions
+			for(const action of Object.getOwnPropertyNames(prototype)) {
+				if(typeof action === 'string' && action[0] != '_') {
+					builder.action(action).done();
+				}
+			}
 		}
 
 		prototype = Object.getPrototypeOf(prototype);
