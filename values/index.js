@@ -10,7 +10,7 @@ const TYPE_TAG = '_:value-type';
 const change = require('./change');
 
 function createPublicApi(def) {
-	return function(value, required, msg) {
+	const api = function(value, required, msg) {
 		if(typeof required != 'boolean') {
 			msg = required;
 			required = false;
@@ -22,6 +22,11 @@ function createPublicApi(def) {
 
 		return def.create(value);
 	};
+
+	for(const m of Object.keys(def.create)) {
+		api[m] = def.create[m];
+	}
+	return api;
 }
 
 class ValueRegistry {
