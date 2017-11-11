@@ -2,7 +2,7 @@
 
 const Appliance = require('../appliance');
 const Sensor = require('./sensor');
-const { percentage } = require('../values');
+const { number } = require('../values');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Sensor) {
 	static get capability() {
@@ -37,6 +37,6 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 	}
 
 	updatePM2_5(value) {
-		this.updateValue('pm2.5', percentage(value));
+		this.updateValue('pm2.5', number(value));
 	}
 });
