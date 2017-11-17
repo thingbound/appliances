@@ -10,6 +10,9 @@ module.exports = Appliance.type(BaseAppliance => class Sensor extends BaseApplia
 		return 'sensor';
 	}
 
+	static availableAPI(builder) {
+	}
+
 	value(sensorType) {
 		return this.getState(sensorType);
 	}
