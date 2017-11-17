@@ -82,6 +82,29 @@ module.exports = Appliance.capability(Parent => class ApplianceWithChildren exte
 	}
 
 	/**
+	 * Get a child based on its identifier.
+	 *
+	 * @param {string} id
+	 */
+	getChild(id) {
+		return this[childrenSymbol].get(id);
+	}
+
+	/**
+	 * Find a child via a filter.
+	 *
+	 * @param {function} filter
+	 */
+	findChild(filter) {
+		for(const child of this[childrenSymbol].values()) {
+			if(filter(child)) {
+				return child;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Get all of the children that are registered.
 	 */
 	get children() {
