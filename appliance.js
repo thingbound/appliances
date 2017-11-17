@@ -89,6 +89,10 @@ const Appliance = module.exports = toExtendable(class Appliance {
 		});
 	}
 
+	init() {
+		return Promise.resolve();
+	}
+
 	/**
 	 * Emit an event with the given name and data.
 	 *
