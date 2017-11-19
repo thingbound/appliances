@@ -2,19 +2,14 @@
 
 const Appliance = require('../appliance');
 const Light = require('./light');
-const State = require('../capabilities/state');
+const Brighntess = require('./brightness');
 const { duration, percentage, 'percentage:change': change } = require('../values');
 
-module.exports = Appliance.capability(BaseAppliance => class DimmableLight extends BaseAppliance.with(State) {
+module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Brighntess) {
 	/**
 	 * Expose the brightness API.
 	 */
 	static availableAPI(builder) {
-		builder.state('brightness')
-			.type('percentage')
-			.description('The brightness of this light')
-			.done();
-
 		builder.action('brightness')
 			.description('Get or set the brightness of this light')
 			.argument('change:brightness', true, 'The change in brightness or absolute brightness')
@@ -39,11 +34,6 @@ module.exports = Appliance.capability(BaseAppliance => class DimmableLight exten
 			.argument('percentage', false, 'The amount to decrease the brightness')
 			.returns('percentage', 'The brightness of the light')
 			.done();
-
-		builder.event('brightness')
-			.type('percentage')
-			.description('The brightness of the light has changed')
-			.done();
 	}
 
 	/**
@@ -57,7 +47,7 @@ module.exports = Appliance.capability(BaseAppliance => class DimmableLight exten
 	 * Get or change the brightness of this light.
 	 */
 	brightness(brightness, duration=Light.DURATION) {
-		let currentBrightness = this.getState('brightness', 0);
+		let currentBrightness = super.brightness();
 
 		if(typeof brightness !== 'undefined') {
 			brightness = change(brightness);
@@ -91,18 +81,6 @@ module.exports = Appliance.capability(BaseAppliance => class DimmableLight exten
 
 		return Promise.resolve(this.changeBrightness(brightness, duration0))
 			.then(() => this.getState('brightness', 0));
-	}
-
-	/**
-	 * Update the current brightness value, such as from a call to `changeBrightness` or
-	 * if the value has been changed externally.
-	 *
-	 * @param {*} brightness
-	 */
-	updateBrightness(brightness) {
-		if(this.updateState('brightness', brightness)) {
-			this.emitEvent('brightness', brightness);
-		}
 	}
 
 	/**
