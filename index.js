@@ -12,6 +12,7 @@ module.exports = {
 	SwitchableMode: require('./capabilities/switchable-mode'),
 
 	Nameable: require('./capabilities/nameable'),
+	EasyNameable: require('./capabilities/easy-nameable'),
 
 	Storage: require('./storage'),
 	Children: require('./children')
