@@ -159,8 +159,8 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	/**
 	 * Check if this appliance matches all of the given tags.
 	 */
-	is(...tags) {
-		return this.metadata.is(...tags);
+	matches(...tags) {
+		return this.metadata.matches(...tags);
 	}
 
 	/**

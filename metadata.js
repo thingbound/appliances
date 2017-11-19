@@ -65,7 +65,7 @@ module.exports = class Metadata {
 	 *
 	 * @param {string} tags
 	 */
-	is(...tags) {
+	matches(...tags) {
 		for(const tag of tags) {
 			if(tag.indexOf('type:') === 0) {
 				if(! this.hasType(tag.substring(5))) {
