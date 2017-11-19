@@ -6,6 +6,8 @@ module.exports = {
 	State: require('./capabilities/state'),
 
 	Power: require('./capabilities/power'),
+	SwitchablePower: require('./capabilities/switchable-power'),
+
 	Mode: require('./capabilities/mode'),
 
 	Nameable: require('./capabilities/nameable'),
