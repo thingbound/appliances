@@ -1,7 +1,7 @@
 'use strict';
 
 const { Class, Mixin, toExtendable, mix } = require('foibles');
-const { EventEmitter } = require('./events');
+const { EventEmitter, Event } = require('./events');
 const DefinitionBuilder = require('./utils/define-api');
 const debug = require('debug');
 
@@ -124,7 +124,7 @@ const Appliance = module.exports = toExtendable(class Appliance {
 			setImmediate(() => {
 				const emitter = this[eventEmitter];
 				for(const e of queue) {
-					emitter.emit(e[0], e[1]);
+					emitter.emit(e[0], new Event(this, e[1]));
 				}
 
 				this[eventQueue] = [];
