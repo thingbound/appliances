@@ -167,6 +167,7 @@ const Appliance = module.exports = toExtendable(class Appliance {
 	 * Destroy this appliance, freeing any resources that it is using.
 	 */
 	destroy() {
+		return Promise.resolve();
 	}
 
 	/**
