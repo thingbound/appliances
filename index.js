@@ -9,6 +9,7 @@ module.exports = {
 	SwitchablePower: require('./capabilities/switchable-power'),
 
 	Mode: require('./capabilities/mode'),
+	SwitchableMode: require('./capabilities/switchable-mode'),
 
 	Nameable: require('./capabilities/nameable'),
 

@@ -32,16 +32,9 @@ module.exports = Appliance.capability(Appliance => class ApplianceWithState exte
 			.done();
 
 		builder.action('mode')
-			.description('Get or set the mode of this appliance')
-			.argument('string', true, 'Optional mode to change to')
+			.description('Get the mode of this appliance')
 			.returns('mode', 'The mode of the appliance')
 			.getterForState('mode')
-			.done();
-
-		builder.action('setMode')
-			.description('Set the mode of this appliance')
-			.argument('string', true, 'Mode to change to')
-			.returns('mode', 'The mode of the appliance')
 			.done();
 
 		builder.action('modes')
@@ -74,24 +67,7 @@ module.exports = Appliance.capability(Appliance => class ApplianceWithState exte
 	*   string indicating the mode
 	*/
 	mode(mode=undefined) {
-		if(typeof mode !== 'undefined') {
-			return this.setMode(mode);
-		}
-
 		return this.getState('mode');
-	}
-
-	/**
-	* Set the mode of this appliance.
-	*
-	* @param {string} mode
-	*/
-	setMode(mode) {
-		if(typeof mode === 'undefined') throw new Error('Mode must be specified');
-		mode = String(mode);
-
-		return Promise.resolve(this.changeMode(mode))
-			.then(() => this.getState('mode'));
 	}
 
 	/**
@@ -103,15 +79,6 @@ module.exports = Appliance.capability(Appliance => class ApplianceWithState exte
 		if(this.updateState('mode', mode)) {
 			this.emitEvent('mode', mode);
 		}
-	}
-
-	/**
-	* Change the current mode of the device.
-	*
-	* @param {mode} mode
-	*/
-	changeMode(mode) {
-		throw new Error('changeMode has not been implemented');
 	}
 
 	/**
