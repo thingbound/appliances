@@ -162,6 +162,11 @@ class DefBuilder {
 
 	action(name) {
 		return new ActionBuilder(name, def => {
+			const current = this._actions[name];
+			if(current) {
+				// TODO: Check compatibility, but for now ignore this action
+				return this;
+			}
 			this._actions[name] = def;
 			return this;
 		});
