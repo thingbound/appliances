@@ -20,5 +20,5 @@ module.exports = {
 	Mode: require('./capabilities/mode'),
 	SwitchableMode: require('./capabilities/switchable-mode'),
 
-	Battery: require('./capabilities/battery')
+	BatteryLevel: require('./capabilities/battery-level')
 };
