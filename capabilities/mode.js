@@ -1,7 +1,7 @@
 'use strict';
 
 const Appliance = require('../appliance');
-const State = require('./state');
+const { State } = require('abstract-things');
 
 /**
  * Mode capability, for appliances that support different modes.

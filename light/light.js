@@ -1,7 +1,7 @@
 'use strict';
 
 const Appliance = require('../appliance');
-const { duration } = require('../values');
+const { duration } = require('abstract-things/values');
 
 module.exports = Appliance.type(BaseAppliance => class Light extends BaseAppliance {
 	/**
@@ -9,6 +9,10 @@ module.exports = Appliance.type(BaseAppliance => class Light extends BaseApplian
 	 */
 	static get type() {
 		return 'light';
+	}
+
+	static get availableAPI() {
+		return [];
 	}
 });
 

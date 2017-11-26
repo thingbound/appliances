@@ -1,9 +1,18 @@
 'use strict';
 
+const { State, RestorableState, Storage, Children, Nameable, EasyNameable } = require('abstract-things');
+
 module.exports = {
 	Appliance: require('./appliance'),
 
-	State: require('./capabilities/state'),
+	State,
+	RestorableState,
+
+	Storage,
+	Children,
+
+	Nameable,
+	EasyNameable,
 
 	Power: require('./capabilities/power'),
 	SwitchablePower: require('./capabilities/switchable-power'),
@@ -11,9 +20,5 @@ module.exports = {
 	Mode: require('./capabilities/mode'),
 	SwitchableMode: require('./capabilities/switchable-mode'),
 
-	Nameable: require('./capabilities/nameable'),
-	EasyNameable: require('./capabilities/easy-nameable'),
-
-	Storage: require('./storage'),
-	Children: require('./children')
+	Battery: require('./capabilities/battery')
 };

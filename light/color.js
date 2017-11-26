@@ -2,10 +2,10 @@
 
 const Appliance = require('../appliance');
 const Light = require('./light');
-const State = require('../capabilities/state');
-const { duration, color } = require('../values');
+const LightState = require('./light-state');
+const { duration, color } = require('abstract-things/values');
 
-module.exports = Appliance.capability(BaseAppliance => class ColoredLight extends BaseAppliance.with(State) {
+module.exports = Appliance.capability(BaseAppliance => class ColoredLight extends BaseAppliance.with(LightState) {
 	/**
 	 * Expose the color methods.
 	 */
@@ -69,5 +69,26 @@ module.exports = Appliance.capability(BaseAppliance => class ColoredLight extend
 
 	changeColor(color, duration) {
 		throw new Error('changeColor not implemented');
+	}
+
+	get restorableState() {
+		return [ ...super.restorableState, 'color' ];
+	}
+
+	setLightState(state) {
+		return super.setLightState(state)
+			.then(() => {
+				if(typeof state.color !== 'undefined') {
+					return this.changeColor(state.color, Light.DURATION);
+				}
+			});
+	}
+
+	mapLightState(state) {
+		super.mapLightState(state);
+
+		if(typeof state.color !== 'undefined') {
+			state.color = color(state.color);
+		}
 	}
 });

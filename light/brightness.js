@@ -1,7 +1,7 @@
 'use strict';
 
 const Appliance = require('../appliance');
-const State = require('../capabilities/state');
+const { State } = require('abstract-things');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(State) {
 	/**

@@ -2,13 +2,14 @@
 
 const Appliance = require('../appliance');
 const Power = require('./power');
-const { boolean } = require('../values');
+const { RestorableState } = require('abstract-things');
+const { boolean } = require('abstract-things/values');
 
 /**
  * Switchable capability, for appliances where the power can be switched on
  * or off.
  */
-module.exports = Appliance.capability(Appliance => class extends Appliance.with(Power) {
+module.exports = Appliance.capability(Appliance => class extends Appliance.with(Power, RestorableState) {
 	/**
 	* Define the API of appliances that can manage their power.
 	*/
@@ -27,7 +28,7 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 			.done();
 
 		builder.action('togglePower')
-			.description('Toggle thw power of the device, turning it on if off and vice versa')
+			.description('Toggle the power of the appliance, turning it on if off and vice versa')
 			.returns('boolean', 'The power state of the appliance')
 			.done();
 
@@ -82,6 +83,18 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 			.then(() => this.power());
 	}
 
+	togglePower() {
+		return this.setPower(! this.power());
+	}
+
+	turnOn() {
+		return this.setPower(true);
+	}
+
+	turnOff() {
+		return this.setPower(false);
+	}
+
 	/**
 	* Change the current power state of the appliance. This method can return
 	* a Promise if the power switching is asynchronous.
@@ -90,5 +103,29 @@ module.exports = Appliance.capability(Appliance => class extends Appliance.with(
 	*/
 	changePower(power) {
 		throw new Error('changePower has not been implemented');
+	}
+
+	/**
+	 * Perform a power change from a state restore. Delegates to `changePower`
+	 * but is provided to support smarter state management such as for lights
+	 * where this is handled by a custom `setLightState`.
+	 *
+	 * @param {} power
+	 */
+	changePowerState(power) {
+		return this.changePower(power);
+	}
+
+	get restorableState() {
+		return [ ...super.restorableState, 'power' ];
+	}
+
+	changeState(state) {
+		return super.changeState(state)
+			.then(() => {
+				if(typeof state.power !== 'undefined') {
+					return this.changePowerState(state.power);
+				}
+			});
 	}
 });

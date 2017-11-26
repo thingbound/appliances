@@ -2,10 +2,11 @@
 
 const Appliance = require('../appliance');
 const Light = require('./light');
-const Brighntess = require('./brightness');
-const { duration, percentage, 'percentage:change': change } = require('../values');
+const LightState = require('./light-state');
+const Brightness = require('./brightness');
+const { duration, percentage, 'percentage:change': change } = require('abstract-things/values');
 
-module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Brighntess) {
+module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Brightness, LightState) {
 	/**
 	 * Expose the brightness API.
 	 */
@@ -92,5 +93,26 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 	 */
 	changeBrightness(brightness, duration) {
 		throw new Error('changeBrightness not implemented');
+	}
+
+	get restorableState() {
+		return [ ...super.restorableState, 'brightness' ];
+	}
+
+	setLightState(state) {
+		return super.setLightState(state)
+			.then(() => {
+				if(typeof state.brightness !== 'undefined') {
+					return this.changeBrightness(state.brightness, Light.DURATION);
+				}
+			});
+	}
+
+	mapLightState(state) {
+		super.mapLightState(state);
+
+		if(typeof state.brightness !== 'undefined') {
+			state.brightness = percentage(state.brightness);
+		}
 	}
 });

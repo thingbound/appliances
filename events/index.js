@@ -5,8 +5,6 @@
  * EventEmitter implementations that exist for Node, but supports setting
  * the context when emitting events.
  */
-module.exports.Event = require('./event');
-
 const registeredListeners = Symbol('listeners');
 const anyListeners = Symbol('anyListeners');
 const context = Symbol('context');

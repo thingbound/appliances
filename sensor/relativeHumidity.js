@@ -2,7 +2,7 @@
 
 const Appliance = require('../appliance');
 const Sensor = require('./sensor');
-const { percentage } = require('../values');
+const { percentage } = require('abstract-things/values');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Sensor) {
 	static get capability() {

@@ -1,7 +1,7 @@
 'use strict';
 
 const Appliance = require('../appliance');
-const State = require('./state');
+const { State } = require('abstract-things');
 
 /**
  * Power capability, for appliances that support switching and monitoring the

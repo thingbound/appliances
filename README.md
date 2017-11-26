@@ -1,7 +1,7 @@
 # Appliances
 
 Appliances is a JavaScript library with abstract base classes for building
-libraries that intreact with smart appliances and devices. It helps with
+libraries that interact with smart appliances and devices. It helps with
 mapping many common appliances to a standarized API built around the type of
 appliance and its capabilities.
 
@@ -16,7 +16,7 @@ or if it can dimmed.
 Any appliance should have one or more types that describes what it is. In
 addition it should have capabilities that describes what it can do.
 
-## Getting started
+## Building appliances
 
 In your Node project do:
 
@@ -27,27 +27,28 @@ npm install appliances
 Creating a light that can powered on or off via some random API:
 
 ```javascript
-const { Light, Power } = require('appliances');
-class LightExample extends Light.with(Power) {
-	constructor(externalLightApi) {
-		super();
+const { Light, Switchable } = require('appliances');
 
-		this.externalLightApi = externalLightApi;
+class LightExample extends Light.with(Switchable) {
+  constructor(externalLightApi) {
+    super();
 
-		// An identifier of the appliance should always be set - with a namespace
-		this.id = 'light-example:' + externalLightApi.id;
+    this.externalLightApi = externalLightApi;
 
-		/*
-		 * You can update the power state at any time with updatePower. This
-		 * usually done either on an event or by polling the external device.
-		 */
-		this.updatePower(externalLightApi.on);
-	}
+    // An identifier of the appliance should always be set - with a namespace
+    this.id = 'light-example:' + externalLightApi.id;
 
-	changePower(power) {
-		// Return a promise unless the power changes immediately
-		return this.externalLightApi.setPower(power)
-			.then(result => this.updatePower(result.on));
-	}
+    /*
+     * You can update the power state at any time with updatePower. This
+     * usually done either on an event or by polling the external device.
+     */
+    this.updatePower(externalLightApi.on);
+  }
+
+  changePower(power) {
+    // Return a promise unless the power changes immediately
+    return this.externalLightApi.setPower(power)
+      .then(result => this.updatePower(result.on));
+  }
 }
 ```
