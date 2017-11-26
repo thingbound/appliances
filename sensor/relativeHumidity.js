@@ -6,7 +6,7 @@ const { percentage } = require('abstract-things/values');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Sensor) {
 	static get capability() {
-		return 'sensor:relativeHumidity';
+		return 'relativeHumidity';
 	}
 
 	static availableAPI(builder) {
@@ -20,6 +20,10 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 			.getterForState('relativeHumidity')
 			.returns('percentage', 'Current relative humidity')
 			.done();
+	}
+
+	get sensorTypes() {
+		return [ ...super.sensorTypes, 'relativeHumidity' ];
 	}
 
 	get relativeHumidity() {

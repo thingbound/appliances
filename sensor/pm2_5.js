@@ -6,7 +6,7 @@ const { number } = require('abstract-things/values');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Sensor) {
 	static get capability() {
-		return 'sensor:pm2.5';
+		return 'pm2.5';
 	}
 
 	static availableAPI(builder) {
@@ -26,6 +26,10 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 			.getterForState('pm2.5')
 			.returns('number', 'Current PM2.5 density')
 			.done();
+	}
+
+	get sensorTypes() {
+		return [ ...super.sensorTypes, 'pm2.5' ];
 	}
 
 	get pm2_5() {

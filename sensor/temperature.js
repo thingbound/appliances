@@ -6,7 +6,7 @@ const { temperature } = require('abstract-things/values');
 
 module.exports = Appliance.capability(BaseAppliance => class extends BaseAppliance.with(Sensor) {
 	static get capability() {
-		return 'sensor:temperature';
+		return 'temperature';
 	}
 
 	static availableAPI(builder) {
@@ -20,6 +20,10 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 			.getterForState('temperature')
 			.returns('temperature', 'Current temperature')
 			.done();
+	}
+
+	get sensorTypes() {
+		return [ ...super.sensorTypes, 'temperature' ];
 	}
 
 	get temperature() {
