@@ -1,8 +1,9 @@
 'use strict';
 
 const Appliance = require('../appliance');
+const { State } = require('abstract-things');
 
-module.exports = Appliance.type(BaseAppliance => class Sensor extends BaseAppliance {
+module.exports = Appliance.type(BaseAppliance => class Sensor extends BaseAppliance.with(State) {
 	/**
 	 * Mark appliance as a `sensor`.
 	 */
