@@ -20,5 +20,8 @@ module.exports = {
 	Mode: require('./capabilities/mode'),
 	SwitchableMode: require('./capabilities/switchable-mode'),
 
+	PowerChannels: require('./capabilities/power-channels'),
+	SwitchablePowerChannels: require('./capabilities/switchable-power-channels'),
+
 	BatteryLevel: require('./capabilities/battery-level')
 };
