@@ -37,6 +37,9 @@ module.exports = Appliance.type(BaseAppliance => class Sensor extends BaseApplia
 	updateValue(sensorType, value) {
 		if(this.updateState(sensorType, value)) {
 			this.emitEvent(sensorType, value);
+			return true;
+		} else {
+			return false;
 		}
 	}
 });
