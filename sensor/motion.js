@@ -27,7 +27,7 @@ module.exports = Appliance.capability(BaseAppliance => class extends BaseApplian
 		builder.action('motion')
 			.description('Get if motion is currently detected')
 			.getterForState('motion')
-			.returns('motion', 'Current motion detected status')
+			.returns('boolean', 'Current motion detected status')
 			.done();
 	}
 

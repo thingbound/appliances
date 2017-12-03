@@ -2,8 +2,10 @@
 
 module.exports.Sensor = require('./sensor');
 
+module.exports.AtmosphericPressure = require('./atmosphericPressure');
 module.exports.CarbonDioxide = require('./carbonDioxide');
 module.exports.CarbonMonoxide = require('./carbonMonoxide');
+module.exports.Contact = require('./contact');
 module.exports.Illuminance = require('./illuminance');
 module.exports.Motion = require('./motion');
 module.exports.PM2_5 = require('./pm2_5');
