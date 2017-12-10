@@ -1,11 +1,12 @@
 'use strict';
 
 const Appliance = require('../appliance');
+const { State } = require('abstract-things');
 
 /**
  * Controller, such as switches and remote controls.
  */
-module.exports = Appliance.type(BaseAppliance => class Controller extends BaseAppliance {
+module.exports = Appliance.type(BaseAppliance => class Controller extends BaseAppliance.with(State) {
 	static get type() {
 		return 'controller';
 	}
