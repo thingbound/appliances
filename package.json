@@ -13,10 +13,10 @@
     "test": "node_modules/.bin/eslint ."
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=6.6.0"
   },
   "dependencies": {
-    "abstract-things": "^0.1.1"
+    "abstract-things": "^0.2.1"
   },
   "devDependencies": {
     "eslint": "^4.12.0",
