@@ -10,5 +10,7 @@ module.exports.Illuminance = require('./illuminance');
 module.exports.Motion = require('./motion');
 module.exports.PM2_5 = require('./pm2_5');
 module.exports.PM10 = require('./pm10');
+module.exports.PowerConsumed = require('./powerConsumed');
+module.exports.PowerLoad = require('./powerLoad');
 module.exports.RelativeHumidity = require('./relativeHumidity');
 module.exports.Temperature = require('./temperature');
