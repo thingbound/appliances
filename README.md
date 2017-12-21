@@ -5,6 +5,9 @@ libraries that interact with smart appliances and devices. It helps with
 mapping many common appliances to a standarized API built around the type of
 appliance and its capabilities.
 
+**DEPRECATED** Everything made available in this library is now in
+[abstract-things](https://github.com/tinkerhub/abstract-things).
+
 # Types and capabilities
 
 Devices from different manufacturers often support different things which makes
